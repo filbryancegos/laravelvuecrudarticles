@@ -1,10 +1,20 @@
 <template>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-info mb-2">
-        <div class="container">
-            <a href="#" class="navbar-brand">Laravel Articles</a>
-        </div>
+<div class="container">
+    <nav class="navbar navbar-expand-sm navbar-dark">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <router-link to="/vuelaravelcrud/public/" class="nav-link">Home</router-link>
+            </li>
+            <li class="nav-item">
+                <router-link to="/vuelaravelcrud/public/" class="nav-link">Create Post</router-link>
+            </li>
+            <li class="nav-item">
+                <router-link to="/vuelaravelcrud/public/" class="nav-link">Posts</router-link>
+            </li>
+        </ul>
     </nav>
-
+</div>
+    
 </template>
 <script>
     export default {

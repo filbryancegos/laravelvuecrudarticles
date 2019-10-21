@@ -1,10 +1,9 @@
 <template>
-  <div>
-      
+<section>
+    <div class="container">
     <div v-if="showmessage" class= "alert" :class="errorclass" role="alert">
         Article {{alertmessage}}!
     </div>
-
     <h2 class="mt-2">Articles</h2>
 
     <form @submit.prevent="addArticle" class="mb-3">
@@ -16,28 +15,35 @@
         </div>
         <button type="submit" class="btn btn-primary btn-block">Save</button>
     </form>
+
     <button @click="clearForm()" class="btn btn-danger btn-block">Cancel</button>
-      <nav aria-label="Page navigation example" class="mt-5">
-      <ul class="pagination">
-        <li :class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchArticles(pagination.prev_page_url)">Previous</a></li>
-        <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
-        <li :class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchArticles(pagination.next_page_url)">Next</a></li>
-      </ul>
+
+    <nav aria-label="Page navigation example" class="mt-5">
+        <ul class="pagination">
+            <li :class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchArticles(pagination.prev_page_url)">Previous</a></li>
+            <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
+            <li :class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchArticles(pagination.next_page_url)">Next</a></li>
+        </ul>
     </nav>
-      <div class="card card-body mb-2" v-for="article in articles" 
-      :key="article.id">
+
+    <div class="card card-body mb-2" v-for="article in articles" 
+    :key="article.id">
         <h3>{{article.title}}</h3>
         <p>{{article.body}}</p>
         <button @click="editArticle(article)" class="btn btn-warning mb-2">Edit</button>
         <button @click="deleteArticle(article.id)" class="btn btn-danger">Delete</button>
-      </div>
+    </div>
+
   </div>
+</section>
+  
 </template>
 
 <script>
     export default {
         data() {
             return {
+                articlesaxious: [],
                 articles: [],
                 article: {
                     id: '',
@@ -54,8 +60,18 @@
         },
         created() {
             this.fetchArticles();
+            this.axiousArticles();
         },
         methods: {
+            axiousArticles(page_url) {
+                let vm = this;
+                page_url = page_url || 'api/articles';
+                axios
+                .get(page_url)
+                .then(response => {
+                    this.articlesaxious = response.data;
+                })
+            },
             fetchArticles(page_url) {
                 let vm = this;
                 page_url = page_url || 'api/articles';
@@ -84,6 +100,7 @@
                 .then(res => res.json())
                 .then(data => {
                     // alert('Article Removed');
+                    this.scrollToTop();
                     this.showAlert('warning','successfully removed');
                     this.fetchArticles();
                 })
@@ -92,6 +109,8 @@
             },
             addArticle() {
                 if (this.edit === false) {
+
+                    console.log(this.article);
                     // Add
                     fetch('api/article', {
                     method: 'post',
@@ -103,13 +122,14 @@
                     .then(res => res.json())
                     .then(data => {
                         this.clearForm();
-                        // alert('Article Added');
+                        this.scrollToTop()
                         this.showAlert('success','succesfully added');
                         this.fetchArticles();
                     })
                     .catch(err => console.log(err));
                     } else {
                         // Update
+                        console.log(this.article);
                         fetch('api/article', {
                         method: 'put',
                         body: JSON.stringify(this.article),
@@ -120,7 +140,6 @@
                         .then(res => res.json())
                         .then(data => {
                             this.clearForm();
-                            // alert('Article Updated');
                             this.showAlert('success', 'succesfully updated');
                             this.fetchArticles();
                         })
@@ -133,6 +152,7 @@
                     this.article.article_id = article.id;
                     this.article.title = article.title;
                     this.article.body = article.body;
+                    this.scrollToTop();
                 },
                 clearForm() {
                     this.edit = false;
@@ -149,7 +169,9 @@
                         this.showmessage = false
                         this.errorclass = '';
                     },2000)
-                    
+                },
+                scrollToTop() {
+                    window.scrollTo(0,0);
                 }
         }
     }

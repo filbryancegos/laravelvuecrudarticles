@@ -12,10 +12,7 @@
     </head>
     <body>
     <div id="app">
-        <navbar></navbar>
-        <div class="container"> 
-            <articles></articles>
-        </div>
+    
     </div>
     <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
     </body>
