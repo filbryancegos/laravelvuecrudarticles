@@ -11,6 +11,9 @@
             <li class="nav-item">
                 <router-link to="/vuelaravelcrud/public/" class="nav-link">Posts</router-link>
             </li>
+             <li class="nav-item">
+                <router-link to="/vuelaravelcrud/public/skills" class="nav-link">Skills</router-link>
+            </li>
         </ul>
     </nav>
 </div>

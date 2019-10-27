@@ -29,3 +29,7 @@ Route::put('article', 'ArticleController@store');
 // Delete article
 Route::delete('article/{id}', 'ArticleController@destroy');
 
+Route::get('skills', function(){
+    return ['laravel','PHP','Vue','Javascript','Phython','React', 'Angular'];
+});
+

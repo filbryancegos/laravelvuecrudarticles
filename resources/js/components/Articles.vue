@@ -102,7 +102,7 @@
                     // alert('Article Removed');
                     this.scrollToTop();
                     this.showAlert('warning','successfully removed');
-                    this.fetchArticles();
+                    // this.fetchArticles();
                 })
                 .catch(err => console.log(err));
                 }

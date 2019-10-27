@@ -13,7 +13,8 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 import App from './App.vue';
-import articles from './components/Articles.vue';
+import Articles from './components/Articles.vue';
+import Skills from './components/Skills.vue';
 
 /**
  * The following block of code may be used to automatically register your
@@ -40,8 +41,13 @@ const routes = [
     {
         name: 'home',
         path: '/vuelaravelcrud/public/',
-        component: articles
-    }
+        component: Articles
+    },
+    {
+        name: 'skills',
+        path: '/vuelaravelcrud/public/skills',
+        component: Skills
+    },
   ];
 
 // const app = new Vue({
